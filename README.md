@@ -1,17 +1,17 @@
 # scalades
-A framework for Descrete Event Simulation written in Scala 3.
+A library for Descrete Event Simulation written in Scala 3.
 
-This library is work in progress in its early stages - contributions are welcome; contact bjorn.regnell@cs.lth.se 
+This is work in progress in its early stages - contributions are welcome; contact bjorn.regnell@cs.lth.se 
 
-This library follow the terminology and principles of on Stochastic Discrete Event Simulation taught in [this course](https://www.eit.lth.se/index.php?ciuid=1298&coursepage=9535)  
+This library follows the terminology and principles of on Stochastic Discrete Event Simulation taught in [**this Lund University course on Simulation**](https://www.eit.lth.se/index.php?ciuid=1298&coursepage=9535)  
 
 ## Design exploration
 
-The basic principles of this framework is currently under exploration and there are currently three alternative design proposals for discussion:
+The basic design principles are currently under exploration and there are currently three alternative design proposals for discussion:
 
-* Design 1: the bare minimal; many things left for 
+* Design 1: the bare minimum OO design; many things left for 
 * Design 2: processes now has both a receive method and a send method and the event handling in the simulation framework is less exposed
-* Design 3: processes now has a signal type parameter and an abstract type State to model state transitions
+* Design 3: processes now has some FP-stuff; there is a signal type parameter and an abstract type State to model state transitions
 
 
 ## TODO + questions
