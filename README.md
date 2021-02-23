@@ -16,7 +16,10 @@ The basic design principles are currently under exploration and there are curren
 
 ## TODO + questions
 
-* add Logger 
+* add Logger trait with plugins for screen and file logging
+* add Sampler in MM1 example to measure e.g. queue length
+* add more examples
+
 * should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc... But BigDecimal is perhaps too slow
 * is the optimization of using opaque type Time instead of a simple case class worth it?
 * is a central que the right thing or should each process have its own queue? But then we need to find the next event by comparing all heads of ques which may take some time...  What's best from a modelling perspective
