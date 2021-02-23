@@ -9,39 +9,36 @@ final class MM1(val lambda: Double, val mu: Double):
   def nextInterArrivalTime: Time.Duration = Time.Duration(RNG.negExp(lambda))
   def nextServiceTime: Time.Duration = Time.Duration(RNG.negExp(mu))
 
-  val sim = new Simulation
+  given sim: Simulation = new Simulation
 
   enum Sig extends Signal:
     case Generate, Job, JobDone
 
   import Sig.*
 
-  object generator extends Process:
-    def handle(e: Event) = e match
-      case Event(Generate, handler, from, now) =>
+  object Generator extends Process:
+    def receive(sig: Signal, from: Process, now: Time.Stamp): Unit = sig match
+      case Generate =>
         println(s"Generator activated at $now.")
-        sim.add(Event(Job, handler = server, from = this, time = now))
-        sim.add(Event(Generate, handler = this, from = this, time = now + nextInterArrivalTime))
+        send(Job, to = server)
+        send(Generate, to = this, delay = nextInterArrivalTime)
  
-  object server extends Process:
+  object Server extends Process:
     private var nbrOfJobsInQ = 0
-    def n = nbrOfJobsInQ
 
-    def handle(e: Event) = e match
-      case Event(Job, handler, from, now) =>
+    def receive(sig: Signal, from: Process, now: Time.Stamp): Unit = sig match
+      case Job =>
         println(s"Server starts processing Job at $now. In queue: $nbrOfJobsInQ")
-        if nbrOfJobsInQ == 0
-        then sim.add(Event(JobDone, handler = this, from = this, time = now + nextServiceTime))
+        if nbrOfJobsInQ == 0 then send(JobDone, to = this, delay = nextServiceTime)
         nbrOfJobsInQ += 1
 
-      case Event(JobDone, handler, from, now) =>
+      case JobDone =>
         nbrOfJobsInQ -= 1
         println(s"Server JobDone at $now. In queue: $nbrOfJobsInQ")
-        if nbrOfJobsInQ > 0
-        then sim.add(Event(JobDone, handler = this, from = this, time = now + nextServiceTime))
+        if nbrOfJobsInQ > 0 then send(JobDone, to = this, delay = nextServiceTime)
 
   def run(end: Time.Stamp) = 
     sim.reset()
-    sim.add(Event(signal = Generate, handler = generator, from = null, Time.zero)) // null is ugly
+    sim.add(Event(signal = Generate, handler = generator, from = null, Time.init)) // null is ugly
     sim.simulate(until = end)
 

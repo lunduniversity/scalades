@@ -1,9 +1,13 @@
 package scalades
 
-open abstract class Process:
-  def handle(e: Event): Unit  
-
 open class Signal
+
+open abstract class Process:
+  def receive(sig: Signal, from: Process, now: Time.Stamp): Unit  
+
+  final def send(sig: Signal, to: Process, 
+    delay: Time.Duration = Time.noDelay)(using sim: Simulation): Unit = 
+      sim.add(Event(sig, handler = to, from = this, time = sim.now + delay))
 
 final case class Event(signal: Signal, handler: Process, from: Process, time: Time.Stamp)
 object Event:
@@ -20,13 +24,13 @@ open class Simulation:
   final def nonEmpty: Boolean = queueLength > 0
   final def isEmpty: Boolean = queueLength == 0
 
-  private var currentTime: Time.Stamp = Time.zero
+  private var currentTime: Time.Stamp = Time.init
   final def now: Time.Stamp = currentTime
   final def nextTimeStamp: Time.Stamp = eventQueue.head.time
 
   final def add(event: Event): Unit =
     if (event.time.units >= currentTime.units) eventQueue.enqueue(event)
-    else throw new Simulation.IllegalTimeException(s"$event is before $now")
+    else throw new IllegalTimeException(s"$event time is before now: $now")
 
   private var onNextEventCallback: Event => Unit = e => ()   
   final def onNextEvent(callback: Event => Unit) = onNextEventCallback = callback
@@ -35,7 +39,7 @@ open class Simulation:
     val event = eventQueue.dequeue
     currentTime = event.time
     onNextEventCallback(event)
-    event.handler.handle(event)
+    event.handler.receive(event.signal, event.from, sim.now)
 
   final def simulate(until: Time.Stamp): Unit =
     while nonEmpty && nextTimeStamp.units <= until.units 
@@ -43,7 +47,4 @@ open class Simulation:
 
   final def reset(): Unit = 
     eventQueue.clear()
-    currentTime = Time.zero
-
-object Simulation:
-  final class IllegalTimeException(msg: String)  extends Exception(msg)
+    currentTime = Time.init  
