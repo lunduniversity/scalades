@@ -22,7 +22,7 @@ The basic design principles are currently under exploration and there are curren
 
 * should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc... But BigDecimal is perhaps too slow
 * is the optimization of using opaque type Time instead of a simple case class worth it?
-* is a central que the right thing or should each process have its own queue? But then we need to find the next event by comparing all heads of ques which may take some time...  What's best from a modelling perspective
+* is a central queue the right thing or should each process have its own queue? But then we need to find the next event by comparing all heads of ques which may take some time...  What's best from a modelling perspective
 * Perhaps a more FP-oriented design where thunks are stored in a data structure and executed at the end of the world? Would this be good for modelling?
 * is the LazyList-thing in Simulation really needed? (intended for traversing a copied sequence of all events)
 * is the onNextEventCalllback useful/needed?
