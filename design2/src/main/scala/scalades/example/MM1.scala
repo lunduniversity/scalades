@@ -20,7 +20,7 @@ final class MM1(val lambda: Double, val mu: Double):
     def receive(sig: Signal, from: Process, now: Time.Stamp): Unit = sig match
       case Generate =>
         println(s"Generator activated at $now.")
-        send(Job, to = server)
+        send(Job, to = Server)
         send(Generate, to = this, delay = nextInterArrivalTime)
  
   object Server extends Process:
@@ -39,6 +39,6 @@ final class MM1(val lambda: Double, val mu: Double):
 
   def run(end: Time.Stamp) = 
     sim.reset()
-    sim.add(Event(signal = Generate, handler = generator, from = null, Time.init)) // null is ugly
+    sim.add(Event(signal = Generate, handler = Generator, from = Generator, Time.init)) 
     sim.simulate(until = end)
 

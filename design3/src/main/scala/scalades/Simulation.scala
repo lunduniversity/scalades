@@ -1,24 +1,19 @@
 package scalades
 
-open class Signal
+class Simulation[Signal]:
 
-open abstract class Process:
-  def receive(sig: Signal, from: Process, now: Time.Stamp): Unit  
-
-  final def send(sig: Signal, to: Process, 
-    delay: Time.Duration = Time.noDelay)(using sim: Simulation): Unit = 
-      sim.add(Event(sig, handler = to, from = this, time = sim.now + delay))
-
-final case class Event(signal: Signal, handler: Process, from: Process, time: Time.Stamp)
-object Event:
-  given Ordering[Event] = 
-    Ordering.fromLessThan[Event]((e1, e2) => e1.time.units > e2.time.units)
-
-open class Simulation:
   import scala.collection.immutable.LazyList
-  import scala.collection.mutable.PriorityQueue
+  import scala.collection.mutable.{PriorityQueue, ArrayBuffer}
+
+  final case class Event(signal: Signal, handler: Process[Signal], from: Process[Signal], time: Time.Stamp)
+  object Event:
+    given Ordering[Event] = 
+      Ordering.fromLessThan[Event]((e1, e2) => e1.time.units > e2.time.units)
 
   private val eventQueue = PriorityQueue.empty[Event]
+  private val processes = ArrayBuffer.empty[Process[Signal]]
+  def processIds: Range = processes.indices
+  def process(pid: Int): Process[Signal] = processes(pid)
   final def events: LazyList[Event] = eventQueue.to(collection.immutable.LazyList)
   final def queueLength = eventQueue.length
   final def nonEmpty: Boolean = queueLength > 0
@@ -27,6 +22,8 @@ open class Simulation:
   private var currentTime: Time.Stamp = Time.init
   final def now: Time.Stamp = currentTime
   final def nextTimeStamp: Time.Stamp = eventQueue.head.time
+
+  final def register(p: Process[Signal]): Unit = processes.append(p)
 
   final def add(event: Event): Unit =
     if (event.time.units >= currentTime.units) eventQueue.enqueue(event)
@@ -39,7 +36,7 @@ open class Simulation:
     val event = eventQueue.dequeue
     currentTime = event.time
     onNextEventCallback(event)
-    event.handler.receive(event.signal, event.from, now)
+    event.handler.update(event.signal, Some(event.from))
 
   final def simulate(until: Time.Stamp): Unit =
     while nonEmpty && nextTimeStamp.units <= until.units 
@@ -47,4 +44,5 @@ open class Simulation:
 
   final def reset(): Unit = 
     eventQueue.clear()
+    processes.foreach(_.init())
     currentTime = Time.init  
