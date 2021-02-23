@@ -9,9 +9,9 @@ This library follows the terminology and principles of on Stochastic Discrete Ev
 
 The basic design principles are currently under exploration and there are currently three alternative design proposals for discussion:
 
-* Design 1: the bare minimum OO design; many things left for 
-* Design 2: processes now has both a receive method and a send method and the event handling in the simulation framework is less exposed
-* Design 3: processes now has some FP-stuff; there is a signal type parameter and an abstract type State to model state transitions
+* [*Design 1*](https://github.com/lunduniversity/scalades/tree/main/design1/src/main/scala/scalades): the bare minimum OO design; many things left for 
+* [*Design 2*](https://github.com/lunduniversity/scalades/tree/main/design2/src/main/scala/scalades): processes now has both a receive method and a send method and the event handling in the simulation framework is less exposed
+* [*Design 3*](https://github.com/lunduniversity/scalades/tree/main/design3/src/main/scala/scalades): processes now has some FP-stuff; there is a signal type parameter and an abstract type State to model state transitions
 
 
 ## TODO + questions
