@@ -9,16 +9,12 @@ This library follows the terminology and principles of on Stochastic Discrete Ev
 
 The basic design principles are currently under exploration and there are currently three alternative design proposals for discussion:
 
-* [*Design 1*](https://github.com/lunduniversity/scalades/tree/main/design1/src/main/scala/scalades): the bare minimum OO design; many things left for 
+* [*Design 1*](https://github.com/lunduniversity/scalades/tree/main/design1/src/main/scala/scalades): the bare minimum OO design; many things left for the user
 * [*Design 2*](https://github.com/lunduniversity/scalades/tree/main/design2/src/main/scala/scalades): processes now has both a receive method and a send method and the event handling in the simulation framework is less exposed
 * [*Design 3*](https://github.com/lunduniversity/scalades/tree/main/design3/src/main/scala/scalades): processes now has some FP-stuff; there is a signal type parameter and an abstract type State to model state transitions
 
 
-## TODO + questions
-
-* add Logger trait with plugins for screen and file logging
-* add Sampler in MM1 example to measure e.g. queue length
-* add more examples
+## Questions
 
 * should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc... But BigDecimal is perhaps too slow
 * is the optimization of using opaque type Time instead of a simple case class worth it?
@@ -27,3 +23,10 @@ The basic design principles are currently under exploration and there are curren
 * is the LazyList-thing in Simulation really needed? (intended for traversing a copied sequence of all events)
 * is the onNextEventCalllback useful/needed?
 
+## Tentative TODO/Brainstorming
+
+* add Logger trait with plugins for screen and file logging
+* add Sampler in MM1 example to measure e.g. queue length
+* add more examples
+* do some bencharks for performance evaluation
+* try out using Scala's Future to run several simulations in parallell on different CPU-threads
