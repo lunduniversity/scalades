@@ -1,26 +1,26 @@
 package scalades.example
 import scalades.*
 
-//sbt "runMain scalades.example.runMM1 10.0 8.0 100.0"
+//sbt "runMain scalades.example.runMM1 0.1 0.125 100.0"
 @main def runMM1(lambda: Double, mu: Double, endTime: Double): Unit =
   MM1(lambda, mu).run(end=Time.Stamp(endTime))
 
 class MM1(val lambda: Double, val mu: Double):
-  def nextInterArrivalTime = Time.Duration(RNG.negExp(lambda))
-  def nextServiceTime      = Time.Duration(RNG.negExp(mu))
+  def nextInterArrivalTime: Time.Duration = Time.Duration(RNG.negExp(1.0/lambda))
+  def nextServiceTime: Time.Duration = Time.Duration(RNG.negExp(1.0/mu))
 
   enum Signal:
     case Generate, Job, JobDone
 
   import Signal.*
 
-  given sim: Simulation[Signal] = new Simulation[Signal]
+  given sim: Simulation[Signal] = Simulation[Signal]()
 
   object Generator extends Process[Signal]:
     enum State { case Generating } // Only one state
 
     def initState = 
-      send(Generate, this)  // to get things going
+      send(Generate)  // to get things going
       State.Generating
 
     def nextState = 

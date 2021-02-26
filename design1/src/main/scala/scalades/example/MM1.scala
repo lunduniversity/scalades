@@ -1,13 +1,13 @@
 package scalades.example
 import scalades.*
 
-//sbt "runMain scalades.example.runMM1 10.0 8.0 100.0"
+//sbt "runMain scalades.example.runMM1 0.1 0.125 100.0"
 @main def runMM1(lambda: Double, mu: Double, endTime: Double): Unit =
   MM1(lambda, mu).run(end=Time.Stamp(endTime))
 
-final class MM1(val lambda: Double, val mu: Double):
-  def nextInterArrivalTime: Time.Duration = Time.Duration(RNG.negExp(lambda))
-  def nextServiceTime: Time.Duration = Time.Duration(RNG.negExp(mu))
+final class MM1(val lambda: Double, val mu: Double):  
+  def nextInterArrivalTime: Time.Duration = Time.Duration(RNG.negExp(1.0/lambda))
+  def nextServiceTime: Time.Duration = Time.Duration(RNG.negExp(1.0/mu))
 
   val sim = new Simulation
 
