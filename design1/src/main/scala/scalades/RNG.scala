@@ -2,14 +2,21 @@ package scalades
 
 /** Random Number Generator (RNG) */
 object RNG:
-  /** Underlying JDK thread-safe random number generator. */
+  /** Underlying thread-safe random number generator from Java JDK. */
   val underlying = java.util.concurrent.ThreadLocalRandom.current
 
-  /** RNG with exponential distribution. */
-  def negExp(mean: Double)  = math.log(1 - underlying.nextDouble)/(-1 / mean)
+  /** Random number with exponential distribution. 
+   * 
+   * Note on implementation: The general random transformation is 
+   * `math.log(1 - underlying.nextDouble)/(-1 / mean)`
+   * but as we know that underlying.nextDouble is between 0 and 1 we can
+   * use the slightly faster `math.log(underlying.nextDouble)/(-1 / mean)`
+   * which is equivalent from a statistical point of view.
+  */
+  def negExp(mean: Double) = math.log(underlying.nextDouble)/(-1 / mean)
 
-  /** RNG with rectangular distribution. */
+  /** Random number with rectangular distribution. */
   def rect(from: Int, until: Int) = underlying.nextInt(from, until)
 
-  /** Set the seed for repeatable pseudo-random sequence. */
+  /** If the seed is set then the pseudo-random sequence is repeatable. */
   def setSeed(seed: Long) = underlying.setSeed(seed)
