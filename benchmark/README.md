@@ -1,8 +1,9 @@
 # Simulation Benchmark Java, Scala 2, Scala Native
 
 ## How to run 
-Nativate to the subdirs of the benchark dir and fire up `sbt` and type `run`.
-As you can see Scala Native is rocking the boat being more than 70% faster:
+Navigate to the sub-folders of the different benchmarks (java, scala2, scala-native) and then fire up `sbt` and type `run`.
+
+As you can see Scala Native is rocking the boat, being more than 70% faster:
 
 ### Java:
 ```
