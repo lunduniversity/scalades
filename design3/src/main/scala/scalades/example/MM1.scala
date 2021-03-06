@@ -67,3 +67,4 @@ class MM1(val lambda: Double, val mu: Double):
     for (pid <- sim.processIds) 
     do println(s"Process ${sim.process(pid)} in state ${sim.process(pid).currentState}")
     
+end MM1
