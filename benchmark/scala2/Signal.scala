@@ -2,8 +2,8 @@
 // information just do it here. 
 
 class Signal(
-  var destination: Proc = null,
-  var arrivalTime: Double = 0.0,
-  var signalType: Int = 0,
+  val destination: Proc = null,
+  val arrivalTime: Double = 0.0,
+  val signalType: Int = 0,
   var next: Signal = null 
 )

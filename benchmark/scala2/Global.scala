@@ -5,7 +5,7 @@ object Global {
 
   var time = 0.0
   
-  def send(tpe: Int, dest: Proc, arrtime: Double): Unit = 
+  @inline def send(tpe: Int, dest: Proc, arrtime: Double): Unit = 
     SignalList.sendSignal(tpe, dest, arrtime)
   
 }
