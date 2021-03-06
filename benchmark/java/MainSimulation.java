@@ -1,7 +1,7 @@
 import java.io.*;
 
 
-//The class inherits Proc so that we can use time and the signal names without dot notation
+//The class inherits Global so that we can use time and the signal names without dot notation
 
 public class MainSimulation extends Global{
 
