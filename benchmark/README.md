@@ -3,7 +3,9 @@
 ## How to run 
 Navigate to the sub-folders of the different benchmarks (java, scala2, scala-native) and then fire up `sbt` and type `run`.
 
-Scala Native is more than 70% faster!
+Scala Native is more than 70% faster!  
+
+NOTE: Scala native does not, at the time of writing, support Windows. You need Linux or macos.
 
 ### Java:
 ```
