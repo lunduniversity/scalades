@@ -44,9 +44,11 @@ Execution time: 0.397 seconds
 Mean number of customers in queuing system: 3.5100252092689312
 ```
 
-Flame graph of commix gc:
+You can see a flame graph below of the above execution using Scala natives super fast garbage collector commix.
 Download [this svg](https://github.com/lunduniversity/scalades/raw/main/benchmark/scala-native/kernel-GC-commix.svg) to your local machine and open it in your browser to enable interactive zooming.
 <img src="./scala-native/kernel-GC-commix.svg">
+
+The corresponding flame graph with no garbage collection is [available here](https://github.com/lunduniversity/scalades/raw/main/benchmark/scala-native/kernel-GC-none.svg) (`GC.none` in `build.sbt` employ a dummy GC where memory is allocated until out of memory)
 
 ## Credit
 
