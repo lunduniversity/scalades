@@ -44,7 +44,7 @@ Execution time: 0.397 seconds
 Mean number of customers in queuing system: 3.5100252092689312
 ```
 
-You can see a flame graph below of the above execution using Scala natives super fast garbage collector commix.
+You can see a flame graph below of the above execution using Scala Native's super-fast garbage collector commix.
 To enable interactive zooming: download [this svg](https://github.com/lunduniversity/scalades/blob/main/benchmark/scala-native/kernel-GC-commix.svg) to your local machine by clicking on the *Raw* button, saving it, and then open the file using a web browser such as Firefox, and now you can click on boxes to zoom in on that stack allocation chain. 
 <img src="./scala-native/kernel-GC-commix.svg">
 
