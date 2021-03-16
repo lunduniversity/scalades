@@ -13,7 +13,7 @@ Navigate to the sub-folders of the different benchmarks (java, scala2, scala-nat
 
 Scala Native is more than 70% faster!  
 
-NOTE: Scala native does not, at the time of writing, support Windows. You need Linux or macos.
+NOTE: [Scala native](http://www.scala-native.org) does not, at the time of writing, support Windows. You need Linux or macos.
 
 ### Java:
 ```
