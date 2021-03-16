@@ -45,11 +45,8 @@ Mean number of customers in queuing system: 3.5100252092689312
 ```
 
 Flame graph of commix gc:
-
-![Alt text](./scala-native/kernel-GC-commix.svg)
+Download [this svg](https://github.com/lunduniversity/scalades/raw/main/benchmark/scala-native/kernel-GC-commix.svg) to your local machine and open it in your browser to enable interactive zooming.
 <img src="./scala-native/kernel-GC-commix.svg">
-
-<![GC.commix](https://github.com/lunduniversity/scalades/raw/main/benchmark/scala-native/kernel-GC-commix.svg)>
 
 ## Credit
 
