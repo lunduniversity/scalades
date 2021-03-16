@@ -1,4 +1,12 @@
-# Simulation Benchmark Java, Scala 2, Scala Native
+# Simulation Benchmarks 
+
+Here you can find benchmarks of stochastic discrete event simulation using different runtime environments, currently including Java, Scala 2, and Scala Native.
+
+
+Summary of results:
+* The Java and Scala on JVM are performing equal. This is not surprising as the underlying runtime is the JVM and the byte code generated should be similar.
+* Scala Native is around 70% faster (sic!) in this use case. This is a significant speed-up and preliminary investigations gives a hint that the new commix garbage collector is part of the explanation of this extraordinary speedup.
+* Disclaimer: The benchmark is still "naive" as it is includes one single data-point. Further simulations are needed to investigate the impact of JVM warmup including the run-time optimizations that JIT provides. Each run show a statistical variation that needs to be characterized using averaging over multiple runs. Etc Etc.  
 
 ## How to run 
 Navigate to the sub-folders of the different benchmarks (java, scala2, scala-native) and then fire up `sbt` and type `run`.
@@ -35,3 +43,7 @@ sbt:scala-native> run
 Execution time: 0.397 seconds
 Mean number of customers in queuing system: 3.5100252092689312
 ```
+
+## Credit
+
+The Java code was originally developed by Christian Nyberg. The Java version was ported to Scala 2 by Björn Regnell, keeping as close to the Java variant as possible enabling "fair" performance comparison. The Scala 2 is thus not idiomatic Scala, but just a direct translation of "java in scala".
