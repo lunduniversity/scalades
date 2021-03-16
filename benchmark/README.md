@@ -4,7 +4,7 @@ Here you can find benchmarks of stochastic discrete event simulation using diffe
 
 
 Summary of results:
-* The Java and Scala on JVM are performing equal. This is not surprising as the underlying runtime is the JVM and the byte code generated should be similar.
+* The Java and Scala on JVM are performing equal. This is not surprising as the underlying runtime in both cases is the same JVM and the byte code generated should be similar.
 * Scala Native is around 70% faster (sic!) in this use case. This is a significant speed-up and preliminary investigations gives a hint that the new commix garbage collector is part of the explanation of this extraordinary speedup.
 * Disclaimer: The benchmark is still "naive" as it is includes one single data-point. Further simulations are needed to investigate the impact of JVM warmup including the run-time optimizations that JIT provides. Each run show a statistical variation that needs to be characterized using averaging over multiple runs. Etc Etc.  
 
