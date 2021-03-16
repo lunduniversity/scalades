@@ -44,6 +44,13 @@ Execution time: 0.397 seconds
 Mean number of customers in queuing system: 3.5100252092689312
 ```
 
+Flame graph of commix gc:
+
+![Alt text](./scala-native/kernel-GC-commix.svg)
+<img src="./scala-native/kernel-GC-commix.svg">
+
+<![GC.commix](https://github.com/lunduniversity/scalades/raw/main/benchmark/scala-native/kernel-GC-commix.svg)>
+
 ## Credit
 
 The Java code was originally developed by Christian Nyberg. The Java version was ported to Scala 2 by Björn Regnell, keeping as close to the Java variant as possible enabling "fair" performance comparison. The Scala 2 is thus not idiomatic Scala, but just a direct translation of "java in scala".
