@@ -34,7 +34,7 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
 
     def nextDuration() =  nextTimeToMeasure()
   
-  object Server extends Proc:
+  object Server extends StateMachine:
     enum State:
       case EmptyQueue, NonEmptyQueue
 
@@ -47,9 +47,9 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
 
     private var nbrOfJobsInQ = 0
 
-    override def startState() = EmptyQueue
+    def startState() = EmptyQueue
 
-    override def nextState() = _ =>
+    def nextState(input: Signal): State = input match
         case Job =>
           dbg(s"Server starts processing Job at $now. In queue: $nbrOfJobsInQ")
           if nbrOfJobsInQ == 0 then send(JobDone, delay = nextServiceTime())
@@ -72,10 +72,8 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
   end Server
   
   def run(end: Time.Stamp) =
-    //logger.clearLog()
+    logger.clearLog()
     out("---- SIMULATION START -----")   
-    startSignal(JobGenerator.Generate, JobGenerator)
-    startSignal(Sampler.Generate, Sampler)
     JobGenerator.start()
     Server.start()
     Sampler.start()
