@@ -1,6 +1,8 @@
 package scalades
 
 
+// The name Process is clashing with java.lang.Process, perhaps Proc to avoid ambiguity.
+
 abstract class Process(using ctx: Simulation):
   def start(): Unit
   def process(signal: Signal): Unit
@@ -30,7 +32,6 @@ abstract class Process(using ctx: Simulation):
  * Initialized by calling start(), which sets currentState to startState().
  * The abstract methods startState and nextState defines the behaviour.
  * The states are modelled by the abstract type `State`.
- * The name Process is taken java.lang.Process, hence Proc to avoid ambiguity.
 */
 abstract class StateMachine(using ctx: Simulation) extends Process(using ctx):
   import scala.compiletime.uninitialized
