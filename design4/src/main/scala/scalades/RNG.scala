@@ -3,7 +3,7 @@ package scalades
 /** Random Number Generator (RNG) */
 object RNG:
   /** Underlying thread-safe random number generator from Java JDK. */
-  private val underlying = java.util.concurrent.ThreadLocalRandom.current
+  val underlying = java.util.concurrent.ThreadLocalRandom.current
 
   /** Random number with negative exponential distribution. */
   inline def negExp(mean: Double): Double = 
