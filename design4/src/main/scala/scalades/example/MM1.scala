@@ -16,7 +16,6 @@ def out(s: String) =
 class MM1(val lambda: Double, val mu: Double) extends Simulation:
   def nextInterArrivalTime(): Time.Duration = RNG.duration(lambda)
   def nextServiceTime(): Time.Duration = RNG.duration(mu)  
-
   def nextTimeToMeasure(): Time.Duration = RNG.duration(1.0)
   
   given Simulation = this
@@ -25,15 +24,17 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
     def nextDuration() =  nextInterArrivalTime()
 
   object Sampler extends Generator(Server.Measure, Server):
-    var average: Double = 0.0 // cumulative moving average
+    var average: Double = 0.0 
     var n: Long = 0 // number of samples
+
+    // https://en.wikipedia.org/wiki/Moving_average#Cumulative_moving_average
     def addSample(x: Double): Unit = 
-      // https://en.wikipedia.org/wiki/Moving_average#Cumulative_moving_average
       average += (x - average)/(n + 1)
       n += 1
 
     def nextDuration() =  nextTimeToMeasure()
-  
+  end Sampler
+
   object Server extends StateMachine:
     enum State:
       case EmptyQueue, NonEmptyQueue

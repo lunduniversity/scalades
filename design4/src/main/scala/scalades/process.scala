@@ -1,7 +1,8 @@
 package scalades
 
 
-// The name Process is clashing with java.lang.Process, perhaps Proc to avoid ambiguity.
+// The name Process is clashing with java.lang.Process, perhaps Proc or Processor to avoid ambiguity.
+// Rename signal: Signal to input: Signal in def process
 
 abstract class Process(using ctx: Simulation):
   def start(): Unit
@@ -44,8 +45,6 @@ abstract class StateMachine(using ctx: Simulation) extends Process(using ctx):
 
   private var _state: State = uninitialized
   final def currentState: State = _state
-  final def start(): Unit = _state = startState()
-
-  final def process(signal: Signal): Unit =
-    _state = nextState(signal)
+  final override def start(): Unit = _state = startState()
+  final override def process(signal: Signal): Unit = _state = nextState(signal)
 
