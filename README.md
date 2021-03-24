@@ -8,6 +8,30 @@ This library is work in progress in its early stages, so the api is likely to ch
 * Documentation: https://fileadmin.cs.lth.se/scalades/docs/api/
 * Source code: https://github.com/lunduniversity/scalades/tree/main/src/main/scala/scalades
   
+## How to use `scalades`
+
+* Pre-requisites: install [sbt](https://www.scala-sbt.org/download.html) (requires [JDK](https://adoptopenjdk.net/))
+
+* Clone this repo *or* download and extract [this zip](https://github.com/lunduniversity/scalades/archive/refs/heads/main.zip) 
+
+* Navigate to the scalades folder and do this in terminal:
+
+```
+$ sbt
+sbt:scalades> runMain scalades.example.runMM1 9 10 10000 
+```
+You should get an output similar to:
+```
+[info] running scalades.example.runMM1 9 10 10000
+---- SIMULATION START -----
+Number of samples: 9828
+Average queue length: 10.33536833536831
+Execution time: 0.543 seconds
+Last event at time stamp: 9999.9100217340560922411402 time units
+SIMULATION END AFTER 10000.0 time units
+[success] Total time: 1 s, completed Mar 24, 2021, 11:30:21 PM
+```
+
 ## Design approach
 
 The main goal of `scalades` is to provide an easy-to-use library that supports the modelling of systems in the paradigm of stochastic Discrete Event Simulation. 
@@ -24,7 +48,7 @@ We have conducted a series of [*benchmarks*](https://github.com/lunduniversity/s
 
 * Should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc so precision might be an issue especially in long simulations where delta time is smaller than total simulation time. But BigDecimal is significantly slower than Double. This is a trade-off between precision and performance that is interesting to explore in benchmarks.
   
-* What are the most important use cases left to implement for the Simulation course?
+* What are the most important use cases left to implement for the [Simulation course at Lund university](https://www.eit.lth.se/index.php?ciuid=1298&coursepage=9535)?
 
 ## TODO
 
