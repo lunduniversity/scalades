@@ -1,22 +1,31 @@
 package scalades
 
-/** Base type for signals sent between processes. */
-trait Signal
+export Simulation.Signal // Make Signal available by `import scalades.*`
 
-/** A simulation event representing a signal sent to destination from sender. */
-final case class Event(signal: Signal, destination: Process, sender: Process, time: Time.Stamp)
-object Event:
-  given Ordering[Event] = 
-    Ordering.fromLessThan[Event]((e1, e2) => e1.time.units > e2.time.units)
+object Simulation:
+  /** Base trait for all signals sent between processes. */
+  trait Signal
 
-/** Simulation controller. */
+  /** A simulation event representing the sending of a signal. */
+  final case class Event(
+    signal: Signal, 
+    receiver: Process, 
+    sender: Process, 
+    time: Time.Stamp
+  )
+  
+  /** Event companion with implicit ordering of events according to time. */
+  object Event:
+    given Ordering[Event] = 
+      Ordering.fromLessThan[Event]((e1, e2) => e1.time.units > e2.time.units)
+
+/** A driver of simulations including signal event logic. */
 open class Simulation:
 
-  import scala.collection.immutable.LazyList
   import scala.collection.mutable.{PriorityQueue, ArrayBuffer}
+  import Simulation.Event
 
-
-  /*private*/ val eventQueue: PriorityQueue[Event] = PriorityQueue.empty[Event]
+  private val eventQueue: PriorityQueue[Event] = PriorityQueue.empty[Event]
   private val processes = ArrayBuffer.empty[Process]
   
   final def processIds: Range = processes.indices
@@ -29,7 +38,7 @@ open class Simulation:
     def flatMap[T](f: Process => IterableOnce[T]): Seq[T] = processes.flatMap(f).toSeq
     def withFilter(f: Process => Boolean) = processes.withFilter(f)
 
-  final def events: LazyList[Event] = eventQueue.to(collection.immutable.LazyList)
+  final def events: LazyList[Event] = eventQueue.to(LazyList)
   final def queueLength = eventQueue.length
   final def nonEmpty: Boolean = queueLength > 0
   final def isEmpty: Boolean = queueLength == 0
@@ -43,7 +52,7 @@ open class Simulation:
     processes.length - 1
 
   final def add(event: Event): Unit =
-    if (event.time.units >= currentTime.units) eventQueue.enqueue(event)
+    if (event.time.units >= now.units) eventQueue.enqueue(event)
     else throw new Time.IllegalTimeException(s"$event time is before now: $now")
 
   private var onNextEventCallback: Event => Unit = e => ()   
@@ -56,7 +65,7 @@ open class Simulation:
     val event = eventQueue.dequeue
     currentTime = event.time
     onNextEventCallback(event)
-    event.destination.update(event.signal, from = Some(event.sender))
+    event.receiver.update(event.signal, sender = event.sender)
 
   private def reset(): Unit = 
     eventQueue.clear()

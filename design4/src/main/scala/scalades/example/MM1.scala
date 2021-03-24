@@ -1,35 +1,39 @@
 package scalades.example
 import scalades.*
 
-val logger = new Logger(isDebug = false)
+//sbt "runMain scalades.example.runMM1 9 10 10000"
+@main 
+def runMM1(lambda: Double, mu: Double, endTime: Double): Unit =
+  MM1(lambda, mu, sampleFreq = 1.0)
+    .run(end = Time.Stamp(endTime))
 
-def dbg = logger.dbg 
+class MM1(val lambda: Double, val mu: Double, sampleFreq: Double) extends Simulation:
 
-def out(s: String) = 
-  logger.log(s)
-  logger.show(s)
-
-//sbt "runMain scalades.example.runMM1 0.1 0.125 100.0"
-@main def runMM1(lambda: Double, mu: Double, endTime: Double): Unit =
-  MM1(lambda, mu).run(end=Time.Stamp(endTime))
-
-class MM1(val lambda: Double, val mu: Double) extends Simulation:
   def nextInterArrivalTime(): Time.Duration = RNG.duration(lambda)
   def nextServiceTime(): Time.Duration = RNG.duration(mu)  
-  def nextTimeToMeasure(): Time.Duration = RNG.duration(1.0)
+  def nextTimeToMeasure(): Time.Duration = RNG.duration(sampleFreq)
   
   given Simulation = this
+
+  val logger = new Logger(isDebug = false)
+  import logger.dbg   // for debugging: dbg("msg") prints if isDebug is true
+  def out(s: String) = // log both to file and console
+    logger.log(s)
+    logger.show(s)
 
   object JobGenerator extends Generator(Server.Job, Server):
     def nextDuration() =  nextInterArrivalTime()
 
   object Sampler extends Generator(Server.Measure, Server):
-    var average: Double = 0.0 
-    var n: Long = 0 // number of samples
+    private var avg: Double = 0.0 
+    def average = avg
 
-    // https://en.wikipedia.org/wiki/Moving_average#Cumulative_moving_average
+    private var n: Long = 0 // number of samples
+    def nbrOfSamples = n 
+
     def addSample(x: Double): Unit = 
-      average += (x - average)/(n + 1)
+    // https://en.wikipedia.org/wiki/Moving_average#Cumulative_moving_average
+      avg += (x - avg)/(n + 1)
       n += 1
 
     def nextDuration() =  nextTimeToMeasure()
@@ -38,13 +42,11 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
   object Server extends StateMachine:
     enum State:
       case EmptyQueue, NonEmptyQueue
-
-    enum Signals extends Signal:
-      case Job, JobDone, Measure 
-
-    export Signals.*
-
     import State.*
+
+    enum Sig extends Signal:
+      case Job, JobDone, Measure 
+    export Sig.*  //Users can write Server.Job instead of Server.Sig.Job
 
     private var nbrOfJobsInQ = 0
 
@@ -81,7 +83,7 @@ class MM1(val lambda: Double, val mu: Double) extends Simulation:
     val t0 = System.currentTimeMillis
     simulateUntil(end)
     val t1 = System.currentTimeMillis
-    out(s"Number of samples: ${Sampler.n}")
+    out(s"Number of samples: ${Sampler.nbrOfSamples}")
     out(s"Average queue length: ${Sampler.average}")
     out(s"Execution time: ${(t1 - t0)/1000.0} seconds")
     out(s"Last event at time stamp: $now time units")
