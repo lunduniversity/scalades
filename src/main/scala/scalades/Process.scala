@@ -2,7 +2,7 @@ package scalades
 
 /** A process that can receive and send signals from/to other processes. 
  * 
- *  @param ctx is the simulation context that handles signal event logic.
+ *  @param ctx the simulation context that handles signal event logic.
 */
 abstract class Process(using ctx: Simulation):
   import scala.compiletime.uninitialized
@@ -39,7 +39,7 @@ abstract class Process(using ctx: Simulation):
   override def toString = s"name:pid=$pid"
 
   /** Called by ctx to update lastSender and call process. */
-  private[scalades] final def update(signal: Signal, sender: Process): Unit = 
+  final def update(signal: Signal, sender: Process): Unit = 
     _lastSender = sender
     receive(signal)
   
