@@ -1,7 +1,7 @@
 # scalades
-`scalades` is a library for modelling and empirical investigation of real-world systems using stochastic  [Descrete-Event Simulation (DES)](https://en.wikipedia.org/wiki/Discrete-event_simulation) using the [Scala](https://www.scala-lang.org/) programming language. 
+`scalades` is a library for empirical investigation of real-world systems using stochastic [Descrete-Event Simulation (DES)](https://en.wikipedia.org/wiki/Discrete-event_simulation) models in the [Scala](https://www.scala-lang.org/) programming language. 
 
-This library is work in progress in its early stages - contributions are welcome; contact bjorn.regnell@cs.lth.se 
+This library is work in progress in its early stages, so the api is likely to change. Contributions are welcome! Contact bjorn.regnell@cs.lth.se 
 
 `scalades` follow the terminology and principles of on Stochastic Discrete Event Simulation taught in [this course on Simulation at Lund University](https://www.eit.lth.se/index.php?ciuid=1298&coursepage=9535).  
 
