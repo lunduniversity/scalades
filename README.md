@@ -19,13 +19,11 @@ Although process can model behaviour that happens concurrently in the real world
 We have conducted a series of [**benchmarks**](https://github.com/lunduniversity/scalades/tree/main/benchmark), indicating that [Scala Native]() is a very promising runtime for `scalades` if short simulation execution time is a priority. When Scala Native is available for Scala 3 our intention is to publish this lib also for bare metal execution.  
 
 
-## Questions and discussion items
+## Questions
 
-* should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc... But BigDecimal is perhaps too slow. Well in long simulations time deltas could be too small for the precision. Interesting to test performance and compare.
+* Should time be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc so precision might be an issue especially in long simulations where delta time is smaller than total simulation time. But BigDecimal is significantly slower than Double. This is a trade-off between precision and performance that is interesting to explore in benchmarks.
   
-* is the optimization of using opaque type Time instead of a simple case class worth it? needs performance test testing
-
-* what are the most important use cases left to implement for the Simulation course?
+* What are the most important use cases left to implement for the Simulation course?
 
 ## TODO
 
