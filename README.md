@@ -10,7 +10,9 @@ This library is work in progress in its early stages, so the api is likely to ch
   
 ## Design approach
 
-The main goal of `scalades` is to provide an easy-to-use DSL that supports the modelling of systems in the paradigm of stochastic Discrete Event Simulation. The world is modelled using discrete events that each has a decimal timestamp ordered in an event queue. The simulation time can directly jump to the time of the occurring next event, allowing efficient simulation of "real" time.
+The main goal of `scalades` is to provide an easy-to-use library that supports the modelling of systems in the paradigm of stochastic Discrete Event Simulation. 
+
+The world is modelled using discrete events that each has a decimal timestamp ordered in an event queue. The simulation time can directly jump to the time of the occurring next event, allowing efficient simulation of "real" time.
 
 In `scalades` systems are modelled in terms of **processes** and **signals**, and the events model that a signal is sent from one process to another at a specific point in time. Each process defines the actions that are taken when it receives a signal and which signals it sends after processing its incoming signals. Processes can have states and the processing of incoming signals can change the state of a process.
 
