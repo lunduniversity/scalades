@@ -28,8 +28,6 @@ We have conducted a series of [*benchmarks*](https://github.com/lunduniversity/s
 
 ## TODO
 
-Some of these points will eventually become tickets/issues:
-
 * add help for contributors
 
 * add more examples
