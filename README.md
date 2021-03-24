@@ -12,14 +12,13 @@ This library is work in progress in its early stages, so the api is likely to ch
 
 The main goal of `scalades` is to provide an easy-to-use library that supports the modelling of systems in the paradigm of stochastic Discrete Event Simulation. 
 
-The world is modelled using discrete events that each has a decimal timestamp ordered in an event queue. The simulation time can directly jump to the time of the occurring next event, allowing efficient simulation of "real" time.
+The world is modelled using events that are happening when processes send signals among each other. Each event has a decimal timestamp ordered in an event queue, with the event with the soonest time stamp first. The simulation time can directly jump to the time of the occurring next event, allowing efficient simulation of real-world systems in pseudo-time instead of real time.
 
-In `scalades` systems are modelled in terms of **processes** and **signals**, and the events model that a signal is sent from one process to another at a specific point in time. Each process defines the actions that are taken when it receives a signal and which signals it sends after processing its incoming signals. Processes can have states and the processing of incoming signals can change the state of a process.
+Although process can model behaviour that happens concurrently in the real world, the simulation model itself is executed in one single thread with pseudo-concurrent precess scheduled based on sequential event dispatching. 
 
-Although process can model behaviour that happens concurrently in the real world, the simulation model itself is executed in one single thread together with the event dispatching mechanism. Multiple simulation runs can be executed independently of each other in different threads to allow efficient exploration of different simulation parameters.   
+Multiple simulations can be executed independently of each other in different threads to allow efficient exploration of different simulation parameters in parallell using many CPU threads.   
 
-We have conducted a series of [**benchmarks**](https://github.com/lunduniversity/scalades/tree/main/benchmark), indicating that [Scala Native]() is a very promising runtime for `scalades` if short simulation execution time is a priority. When Scala Native is available for Scala 3 our intention is to publish this lib also for bare metal execution.  
-
+We have conducted a series of [*benchmarks*](https://github.com/lunduniversity/scalades/tree/main/benchmark), indicating that [Scala Native]() is a very promising runtime for `scalades` that may be even faster than the JVM. When Scala Native is available for Scala 3 our intention is to publish this library also for bare metal execution.  
 
 ## Questions
 
