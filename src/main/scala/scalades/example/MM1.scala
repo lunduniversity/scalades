@@ -13,7 +13,7 @@ class MM1(val lambda: Double, val mu: Double, sampleFreq: Double) extends Simula
   def nextServiceTime(): Time.Duration = RNG.duration(mu)  
   def nextTimeToMeasure(): Time.Duration = RNG.duration(sampleFreq)
   
-  given Simulation = this
+  given Simulation = this // provide implicit context to processes
 
   val logger = new Logger(isDebug = false)
   import logger.dbg   // for debugging: dbg("msg") prints if isDebug is true
