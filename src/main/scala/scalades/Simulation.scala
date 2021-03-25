@@ -92,7 +92,7 @@ open class Simulation:
     processes.foreach(_.start())
     currentTime = Time.Zero  
 
-  /** Simulate until the condition `isTrue` is true. */  
+  /** Simulate while the condition `isTrue` is true. */  
   final def simulateWhile(isTrue: => Boolean): Unit = 
     while isTrue do handleNextEvent()
 
