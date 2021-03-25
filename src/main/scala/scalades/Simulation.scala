@@ -42,7 +42,7 @@ open class Simulation:
     def flatMap[T](f: Process => IterableOnce[T]): Seq[T] = processes.flatMap(f).toSeq
     def withFilter(f: Process => Boolean) = processes.withFilter(f)
 
-  /** A lazy list with all remaining events in the event queue. */
+  /** A list with a lazy copy of the event queue. */
   final def events: LazyList[Event] = eventQueue.to(LazyList)
 
   /** The number of remaining events in the event queue. */
