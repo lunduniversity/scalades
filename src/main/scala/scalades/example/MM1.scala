@@ -52,7 +52,8 @@ class MM1(val lambda: Double, val mu: Double, sampleFreq: Double) extends Simula
 
     def startState() = EmptyQueue
 
-    def nextState(input: Signal): State = input match
+    def nextState(input: Signal): State = 
+      input match
         case Job =>
           dbg(s"Server starts processing Job at $now. In queue: $nbrOfJobsInQ")
           if nbrOfJobsInQ == 0 then send(JobDone, delay = nextServiceTime())

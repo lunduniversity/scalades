@@ -1,5 +1,5 @@
 # assumes (1) you have perf installed on a linux system
-# sudo apt update && sudo apt install linux-tools-common
+# sudo apt update && sudo apt install linux-tools-generic
 
 # assumes (2) you have cloned https://github.com/brendangregg/FlameGraph
 # into this folder ~/git/hub/FlameGraph/

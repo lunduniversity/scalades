@@ -1,11 +1,19 @@
-scalaVersion := "3.0.0-RC1"
+ThisBuild / scalaVersion := "3.0.0-RC1"
+ThisBuild / organization := "se.lth.cs"
 
-initialCommands := "import scalades.*"
+ThisBuild / initialCommands := "import scalades.*"
 
-scalacOptions ++= Seq(
+ThisBuild / version      := "0.1.1"
+
+ThisBuild / scalacOptions ++= Seq(
   "-encoding", "utf8", 
   "-source", "future",
   "-Xfatal-warnings",  
   "-deprecation",
   "-unchecked",
 )
+
+lazy val scalades = (project in file("."))
+  .settings(
+    name := "scalades"
+  )
