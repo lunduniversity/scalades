@@ -51,6 +51,8 @@ The `scalades` library is implemented in [Scala 3](https://docs.scala-lang.org/s
 
 We have conducted a series of [*benchmarks*](https://github.com/lunduniversity/scalades/tree/main/benchmark), indicating that [Scala Native]() is a very promising runtime for `scalades` that may be even faster than the JVM. When Scala Native is available for Scala 3 our intention is to publish this library also for bare metal execution.  
 
+For more information on Scala native performance and further benchmarking using `scalades` in Scala Native, see this blog post by Wojciech Mazur:[Revisiting Scala Native performance](https://medium.com/virtuslab/revisiting-scala-native-performance-67029089f241)
+
 ## TODO
 
 * Should [Time](https://github.com/lunduniversity/scalades/blob/main/src/main/scala/scalades/Time.scala) be a Double or BigDecimal? Floating-point numbers are strange when comparing with >= etc so precision might be an issue especially in long simulations where durations are much smaller than the simulation time stamps. But BigDecimal is significantly slower than Double. This is a trade-off between precision and performance that is interesting to explore in benchmarks.
