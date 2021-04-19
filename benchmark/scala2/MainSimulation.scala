@@ -22,7 +22,7 @@ object MainSimulation {
 			// actSignal is the latest signal that has been fetched from the 
       // signal list in the main loop below.
 
-      while (time < 1000000) {
+      while (time < 123456789) {
         val actSignal = SignalList.fetchSignal()
         time = actSignal.arrivalTime
         actSignal.destination.treatSignal(actSignal)

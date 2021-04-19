@@ -31,7 +31,7 @@ public class MainSimulation extends Global{
 
     	// This is the main loop
 
-    	while (time < 1000000){
+    	while (time < 123456789){
     		actSignal = SignalList.fetchSignal();
     		time = actSignal.arrivalTime;
     		actSignal.destination.treatSignal(actSignal);
