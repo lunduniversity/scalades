@@ -3,6 +3,7 @@
 **/*.class
 **/*.log
 **/*~
+**/*.out
 
 # sbt, vscode, metals
 **/project/metals.sbt
