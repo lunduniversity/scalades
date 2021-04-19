@@ -1,0 +1,75 @@
+<html>
+<head>
+<title> Simulering med JavaScript </title>
+<script>
+
+function insertEvent(first, last, evType, evTime){
+	newEvent = {typeOfEvent:evType, eventTime:evTime, next:null};
+	var predummy = first;
+	var dummy = first.next;
+	while ((dummy.eventTime < evTime) && (dummy != last)){
+		predummy = dummy;
+		dummy = predummy.next;
+	}
+	predummy.next = newEvent;
+	newEvent.next = dummy;
+}
+
+function fetchEvent(first, last){
+	var dummy = first.next;
+	first.next = dummy.next;
+	dummy.next = null;
+	return dummy;
+}
+
+function simulate(){
+	var last = {typeOfEvent:0, eventTime:0, next:null};
+	var first = {typeOfEvent:0, eventTime:0, next:last};
+	const ARRIVAL = 1;
+	const READY = 2;
+	const MEASURE = 3;
+	var time = 0.0;
+	var inQueue = 0;
+	var nbrMeasurements = 0;
+	var total = 0;
+	insertEvent(first, last, ARRIVAL, 0);
+	insertEvent(first, last, MEASURE, 0);
+	var actEvent;
+	alert("Nu startar vi!");
+	var start = window.performance.now();
+	while (time < 123456789){
+		actEvent = fetchEvent(first, last);
+		time = actEvent.eventTime;
+		if (actEvent.typeOfEvent == ARRIVAL){
+			if (inQueue == 0){
+				insertEvent(first, last, READY, time - Math.log(Math.random()));
+			}
+			inQueue++;
+			insertEvent(first, last, ARRIVAL, time - (1.0/0.8)*Math.log(Math.random()));
+		} else if (actEvent.typeOfEvent == READY){
+			inQueue--;
+			if (inQueue > 0){
+				insertEvent(first, last, READY, time - Math.log(Math.random()));
+			}
+		} else if (actEvent.typeOfEvent == MEASURE){
+			total = total + inQueue;
+			nbrMeasurements++;
+			insertEvent(first, last, MEASURE, time - 10*Math.log(Math.random()));
+		}
+	}
+	var end = window.performance.now();
+	alert("Elapsed time: " + (end - start)/1000);
+	alert("Mean :" + total/nbrMeasurements);
+	alert("Number measurements: " + nbrMeasurements);
+}
+
+
+</script>
+<body>
+<H2>Simulering med JavaScript</H2>
+Ett M/M/1-system simuleras. Tryck på knappen "Simulera". <br><br>
+
+<input type="button" name="spela" value="Simulera" onClick="simulate();">
+
+</body>
+</html>
