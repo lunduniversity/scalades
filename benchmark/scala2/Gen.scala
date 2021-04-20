@@ -5,7 +5,7 @@
     //Where to send customers
     //How many to generate per second
 
-class Gen(sendTo: Proc, lambda: Double) extends Proc {
+class Gen(sendTo: Proc) extends Proc {
 
   //The random number generator is started:
   val rnd = new java.util.Random()
@@ -15,7 +15,7 @@ class Gen(sendTo: Proc, lambda: Double) extends Proc {
     import Global._
     if (x.signalType ==  READY) {
         send(ARRIVAL, sendTo, time)
-        send(READY, this, time + (2.0/lambda)*rnd.nextDouble())
+        send(READY, this, time - 1.25*math.log(rnd.nextDouble()))
     }
   }
 }

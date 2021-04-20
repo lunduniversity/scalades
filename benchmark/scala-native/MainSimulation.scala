@@ -9,7 +9,7 @@ object MainSimulation {
 
       // The generator shall generate 0.8 customers per second
       // The generated customers shall be sent to qs
-      val generator = new Gen(lambda = 0.8, sendTo = qs)
+      val generator = new Gen(sendTo = qs)
 
       //To start the simulation the first signals are put in the signal list below
 

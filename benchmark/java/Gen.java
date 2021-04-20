@@ -10,7 +10,6 @@ class Gen extends Proc{
 
 	//There are two parameters:
 	public Proc sendTo;    //Where to send customers
-	//public double lambda;  //How many to generate per second  ???? TODO parameterize
 
 	//What to do when a signal arrives
 	public void treatSignal(Signal x){

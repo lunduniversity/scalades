@@ -5,7 +5,7 @@
     //Where to send customers
     //How many to generate per second
 
-class Gen(sendTo: Proc, lambda: Double) extends Proc {
+class Gen(sendTo: Proc) extends Proc {
 
   //The random number generator is started:
   val rnd = new java.util.Random()
