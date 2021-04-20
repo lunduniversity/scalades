@@ -1,11 +1,12 @@
 package scalades.example
 import scalades.*
 
-//sbt "runMain scalades.example.runMM1 9 10 10000"
+//sbt "runMain scalades.example.runMM1 9 10 1 10000"
+//sbt "runMain scalades.example.runMM1 0.8 1.0 10.0 12345678"
+
 @main 
-def runMM1(lambda: Double, mu: Double, endTime: Double): Unit =
-  MM1(lambda, mu, sampleFreq = 1.0)
-    .run(end = Time.Stamp(endTime))
+def runMM1(lambda: Double, mu: Double, sampleFreq: Double, endTime: Double): Unit =
+  MM1(lambda, mu, sampleFreq).run(end = Time.Stamp(endTime))
 
 class MM1(val lambda: Double, val mu: Double, sampleFreq: Double) extends Simulation:
 
