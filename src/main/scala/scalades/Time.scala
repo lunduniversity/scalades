@@ -2,7 +2,7 @@ package scalades
 
 object Time:
   import math.BigDecimal.double2bigDecimal
-  type Underlying = BigDecimal // change to Double if performance is more important than precision
+  type Underlying = Double // change to BigDecimal if precision is more important than performance
   opaque type Stamp = Underlying 
   opaque type Duration = Double
 
