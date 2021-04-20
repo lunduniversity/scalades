@@ -14,7 +14,7 @@ class QS extends Proc{
 			case ARRIVAL:{
 				numberInQueue++;
 				if (numberInQueue == 1){
-					send(READY,this, time + 0.2*  rnd.nextDouble());
+					send(READY,this, time - Math.log(rnd.nextDouble()));
 				}
 			} break;
 
@@ -24,14 +24,14 @@ class QS extends Proc{
 					send(ARRIVAL, sendTo, time);
 				}
 				if (numberInQueue > 0){
-					send(READY, this, time + 0.2*  rnd.nextDouble());
+					send(READY, this, time - Math.log(rnd.nextDouble()));
 				}
 			} break;
 
 			case MEASURE:{
 				noMeasurements++;
 				accumulated = accumulated + numberInQueue;
-				send(MEASURE, this, time + 2*  rnd.nextDouble());
+				send(MEASURE, this, time - 10.0*Math.log(rnd.nextDouble()));
 			} break;
 		}
 	}

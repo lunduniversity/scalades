@@ -35,9 +35,9 @@ function simulate(){
 	insertEvent(first, last, ARRIVAL, 0);
 	insertEvent(first, last, MEASURE, 0);
 	var actEvent;
-	alert("Nu startar vi!");
+	alert("Starting simulation!");
 	var start = window.performance.now();
-	while (time < 123456789){
+	while (time < 12345678){
 		actEvent = fetchEvent(first, last);
 		time = actEvent.eventTime;
 		if (actEvent.typeOfEvent == ARRIVAL){
@@ -45,7 +45,7 @@ function simulate(){
 				insertEvent(first, last, READY, time - Math.log(Math.random()));
 			}
 			inQueue++;
-			insertEvent(first, last, ARRIVAL, time - (1.0/0.8)*Math.log(Math.random()));
+			insertEvent(first, last, ARRIVAL, time - (1.25)*Math.log(Math.random()));
 		} else if (actEvent.typeOfEvent == READY){
 			inQueue--;
 			if (inQueue > 0){
@@ -54,7 +54,7 @@ function simulate(){
 		} else if (actEvent.typeOfEvent == MEASURE){
 			total = total + inQueue;
 			nbrMeasurements++;
-			insertEvent(first, last, MEASURE, time - 10*Math.log(Math.random()));
+			insertEvent(first, last, MEASURE, time - 10.0*Math.log(Math.random()));
 		}
 	}
 	var end = window.performance.now();
@@ -67,9 +67,9 @@ function simulate(){
 </script>
 <body>
 <H2>Simulering med JavaScript</H2>
-Ett M/M/1-system simuleras. Tryck på knappen "Simulera". <br><br>
+Simulating M/M/1 queueing system. Click on the button to start. <br><br>
 
-<input type="button" name="spela" value="Simulera" onClick="simulate();">
+<input type="button" name="spela" value="Simulate" onClick="simulate();">
 
 </body>
 </html>

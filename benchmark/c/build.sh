@@ -1,4 +1,4 @@
-CMD="gcc main.c -lm"
-echo "Compiling with $CMD" 
+CMD="gcc main.c -lm -O3"
+echo "Compiling with: $CMD" 
 $($CMD)
-echo "Binary output: $(ls -sh a.out)"
+echo "Binary output (size name): $(ls -sh a.out)"

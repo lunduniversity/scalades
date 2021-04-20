@@ -31,14 +31,14 @@ function treatSignal(x::Queue, m::Signal)
     elseif m.typeOfEvent == MEASURE
         x.accumulated = x.accumulated + x.numberOfCustomers
         x.noMeasurements = x.noMeasurements + 1
-        send(MEASURE, time + 5, x)
+        send(MEASURE, time - 10.0*log(rand()), x)
     end
 end
 
 function treatSignal(x::Generator, m::Signal)
     if m.typeOfEvent == READY
         send(ARRIVAL, time, x.sendTo)
-        send(READY, time - 1.111111 * log(rand()), x)
+        send(READY, time - 1.25 * log(rand()), x)
     end
 end
 
@@ -58,7 +58,7 @@ ARRIVAL = 1
 READY = 2
 MEASURE = 3
 
-simulationTime = 1234567
+simulationTime = 12345678
 
 q = Queue(0, 0, 0)
 gen = Generator(q)

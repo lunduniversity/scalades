@@ -19,7 +19,7 @@ public class MainSimulation extends Global{
     	Q1.sendTo = null;
 
     	Gen Generator = new Gen();
-    	Generator.lambda = 9; //Generator shall generate 9 customers per second
+    	//Generator.lambda = 0.8 ; //Generator shall generate 9 customers per second
     	Generator.sendTo = Q1; // The generated customers shall be sent to Q1
 
     	//To start the simulation the first signals are put in the signal list below
@@ -31,7 +31,7 @@ public class MainSimulation extends Global{
 
     	// This is the main loop
 
-    	while (time < 123456789){
+    	while (time < 12345678){
     		actSignal = SignalList.fetchSignal();
     		time = actSignal.arrivalTime;
     		actSignal.destination.treatSignal(actSignal);

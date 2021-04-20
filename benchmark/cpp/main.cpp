@@ -45,9 +45,10 @@ public:
 };
 
 default_random_engine gen;
-exponential_distribution<double> ex1(1.0), ex2(2.0);
+// ex1 arrival 1/rate, ex2 service 1/rate, ex3 measurement 1/rate 
+exponential_distribution<double> ex1(1.0), ex2(1.25), ex3(10.0);
 
-SQ sq;
+SQ sq;  // TODO: re-implement this with single-linked hand-rolled queue, c.f. java & c
 double simTime = 0;
 
 const int ARRIVAL = 1;
@@ -75,7 +76,7 @@ public:
         case MEASURE:
             accumulated = accumulated + numberInQueue;
             noMeasurements++;
-            sq.send(MEASURE, simTime + 5.0, this);
+            sq.send(MEASURE, simTime + ex3(gen), this);
             break;
         }
     }
@@ -102,10 +103,13 @@ int main()
     sq.send(READY, 0, &factory);
     sq.send(MEASURE, 0, &q);
     clock_t tic = clock();
-    while (simTime < 123456789){
+    while (simTime < 12345678){  // NOTE: this is an order of magnitude less than 123456789
         Message m = sq.getMessage();
         simTime = m.arrivalTime;
         (*m.destination).treatSignal(m);
+        // if (((int) simTime) % 100 == 0) {
+        //     cout << simTime << endl;
+        // }
         //cout << q.numberInQueue << endl;
     }
     clock_t toc = clock();

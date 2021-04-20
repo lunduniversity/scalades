@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "3.0.0-RC1"
+ThisBuild / scalaVersion := "3.0.0-RC3"
 ThisBuild / organization := "se.lth.cs"
 
 ThisBuild / initialCommands := "import scalades.*"

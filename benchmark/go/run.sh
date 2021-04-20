@@ -1,3 +1,3 @@
 # install: sudo snap install go --classic
-go run simtest2.go
+go run simtest.go
 

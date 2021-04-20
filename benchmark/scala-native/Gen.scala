@@ -15,7 +15,7 @@ class Gen(sendTo: Proc, lambda: Double) extends Proc {
     import Global._
     if (x.signalType ==  READY) {
         send(ARRIVAL, sendTo, time)
-        send(READY, this, time + (2.0/lambda)*rnd.nextDouble())
+        send(READY, this, time - 1.25*math.log(rnd.nextDouble())) // 1.0/lambda
     }
   }
 }

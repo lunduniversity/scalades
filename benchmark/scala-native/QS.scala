@@ -12,17 +12,17 @@ class QS(val sendTo: Option[Proc] = None) extends Proc {
     x.signalType match {
       case ARRIVAL =>
         numberInQueue += 1
-        if (numberInQueue == 1) send(READY,this, time + 0.2 *   rnd.nextDouble())
+        if (numberInQueue == 1) send(READY,this, time - math.log(rnd.nextDouble()))
 
       case READY =>
         numberInQueue -= 1
         if (sendTo.isDefined) send(ARRIVAL, sendTo.get, time)
-        if (numberInQueue > 0) send(READY, this, time + 0.2 *   rnd.nextDouble())
+        if (numberInQueue > 0) send(READY, this, time  - math.log(rnd.nextDouble()))
 
       case MEASURE =>
         noMeasurements += 1
         accumulated += numberInQueue
-        send(MEASURE, this, time + 2 *   rnd.nextDouble())
+        send(MEASURE, this, time  - 10.0*math.log(rnd.nextDouble()))
     }
   }
 }

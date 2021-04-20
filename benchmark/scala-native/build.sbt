@@ -16,6 +16,6 @@ import scala.scalanative.build._
 
 nativeConfig ~= { 
   _.withLTO(LTO.thin)
-    .withMode(Mode.releaseFast) // change to releaseFull for optimized binary
-    .withGC(GC.commix) // change to GC.none to get dummy GC
+    .withMode(Mode.releaseFast) // change to releaseFull instead of releaseFast for optimized binary
+    .withGC(GC.commix) // change to GC.none instead of GC.commix to get dummy GC
 }

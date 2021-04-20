@@ -79,27 +79,27 @@ int main(int argc, char** argv) {
     
     clock_t tic = clock();
     
-    while (time < 123456789){
+    while (time < 12345678){
         actEvent = fetchEvent();
         time = actEvent->timeOfEvent;
         switch (actEvent->typeOfEvent){
             case ARRIVAL:{
                 if (noInQueue == 0)
-                    insertEvent(READY, time - log(uni()));
+                    insertEvent(READY, time - log(uni())); // mu = 1
                 noInQueue++;
-                insertEvent(ARRIVAL, time - 2.0*log(uni()));
+                insertEvent(ARRIVAL, time - 1.25*log(uni()));  // lambda 0.8
             }
             break;
             case READY: {
                 noInQueue--;
                 if (noInQueue > 0)
-                    insertEvent(READY, time - log(uni()));
+                    insertEvent(READY, time - log(uni()));  // mu = 1
             }
             break;
             case MEASURE: {
                 noMeasurements++;
                 accumulated = accumulated + noInQueue;
-                insertEvent(MEASURE, time + 5);
+                insertEvent(MEASURE, time - 10.0*log(uni()));
                 }
             }
         free(actEvent);

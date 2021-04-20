@@ -16,7 +16,7 @@ class generator:
         self.this = self
     def treatSignal(self, x):
         send(ARRIVAL, simTime, self.sendTo)
-        send(READY, simTime + random.expovariate(0.8), self)
+        send(READY, simTime + random.expovariate(0.8), self)  # time between arrivals
         
 class queue:
     def __init__(self):
@@ -26,35 +26,35 @@ class queue:
     def treatSignal(self, x):
         if x == ARRIVAL:
             if self.numberInQueue == 0:
-                send(READY, simTime + random.expovariate(1.0), self)
+                send(READY, simTime + random.expovariate(1.0), self) # service time
             self.numberInQueue = self.numberInQueue + 1
         elif x == READY:
             self.numberInQueue = self.numberInQueue - 1
             if self.numberInQueue > 0:
-                send(READY, simTime + random.expovariate(1.0), self)
+                send(READY, simTime + random.expovariate(1.0), self) # service time
         elif x == MEASURE:
             self.numberMeasurements = self.numberMeasurements + 1
             self.accumulated = self.accumulated + self.numberInQueue
-            send(MEASURE, simTime + 5, self)
+            send(MEASURE, simTime + random.expovariate(0.1), self)
             
-class observer:
-    def __init__(self):
-        self.meanObserveTime = 10
-        self.numberMeasurements = 0
-        self.accumulated = 0
-    def treatSignal(self, x):
-        if x == ARRIVAL:
-            if self.numberInQueue == 0:
-                send(READY, simTime + random.expovariate(1.0), self)
-            self.numberInQueue = self.numberInQueue + 1
-        elif x == READY:
-            self.numberInQueue = self.numberInQueue - 1
-            if self.numberInQueue > 0:
-                send(READY, simTime + random.expovariate(1.0), self)
-        elif x == MEASURE:
-            self.numberMeasurements = self.numberMeasurements + 1
-            self.accumulated = self.accumulated + self.numberInQueue
-            send(MEASURE, simTime + 5, self)
+# class observer:
+#     def __init__(self):
+#         self.meanObserveTime = 10
+#         self.numberMeasurements = 0
+#         self.accumulated = 0
+#     def treatSignal(self, x):
+#         if x == ARRIVAL:
+#             if self.numberInQueue == 0:
+#                 send(READY, simTime + random.expovariate(1.0), self)
+#             self.numberInQueue = self.numberInQueue + 1
+#         elif x == READY:
+#             self.numberInQueue = self.numberInQueue - 1
+#             if self.numberInQueue > 0:
+#                 send(READY, simTime + random.expovariate(1.0), self)
+#         elif x == MEASURE:
+#             self.numberMeasurements = self.numberMeasurements + 1
+#             self.accumulated = self.accumulated + self.numberInQueue
+#             send(MEASURE, simTime + 5, self)
 
 
 def send(evType, evTime, destination):
@@ -83,9 +83,7 @@ while simTime < simulationTime:
     simTime = actEvent[0]
     actEvent[2].treatSignal(actEvent[1])
 
-
-
-print('Mean: ', q.accumulated/q.numberMeasurements)
+print('Mean: ', 1.0*q.accumulated/q.numberMeasurements)
 totalTid = time.time() - startTime
 print('Elapsed time: ', totalTid)
 print('Number of measurements: ', q.numberMeasurements)

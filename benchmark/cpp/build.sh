@@ -1,4 +1,4 @@
 CMD="g++ main.cpp"
-echo Compiling with $CMD 
+echo "Compiling with: $CMD" 
 $($CMD)
-ls -sh a.out
+echo "Binary output (size name): $(ls -sh a.out)"
