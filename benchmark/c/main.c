@@ -1,10 +1,3 @@
-/* 
- * File:   main.c
- * Author: tts-cny
- *
- * Created on den 10 december 2014, 10:27
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
